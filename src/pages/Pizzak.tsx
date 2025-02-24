@@ -2,13 +2,16 @@ import { useEffect, useState } from 'react';
 import { Pizza } from '../types/Pizza';
 import apiClient from '../apiClient/apiClient';
 import Card from 'react-bootstrap/Card';
-import { Button, Col, Container, Row } from 'react-bootstrap';
+import { Button, Col, Container, Row, Toast, ToastContainer } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from '../components/Navbar';
 import './Pizzak.css';
 
 const Pizzak = () => {
     const [data, setData] = useState<Array<Pizza>>([]);
+    const [showToast, setShowToast] = useState(false);
+
+    const kosar: Array<Pizza> = [];
 
     useEffect(() => {
         apiClient
@@ -41,13 +44,38 @@ const Pizzak = () => {
                                     <Card.Text className="mt-auto text-center fw-bold">
                                         {p.ar.toString()} Ft
                                     </Card.Text>
-                                    <Button variant="dark">Kosárba</Button>
+                                    <Button
+                                        variant="dark"
+                                        onClick={() => {
+                                            kosar.push(p);
+                                            localStorage.setItem('kosar', JSON.stringify(kosar));
+                                            setShowToast(true);
+                                        }}
+                                    >
+                                        Kosárba
+                                    </Button>
                                 </Card.Body>
                             </Card>
                         </Col>
                     ))}
                 </Row>
             </Container>
+            <ToastContainer position="bottom-end" className="p-3" style={{ zIndex: 1 }}>
+                <Toast
+                    onClose={() => setShowToast(false)}
+                    show={showToast}
+                    autohide
+                    delay={3000}
+                    bg="success"
+                    className="text-white"
+                >
+                    <Toast.Header>
+                        <strong className="me-auto">Értesítés</strong>
+                        <small>Most</small>
+                    </Toast.Header>
+                    <Toast.Body>Termék sikeressen hozzáadva a kosaradhoz</Toast.Body>
+                </Toast>
+            </ToastContainer>
         </div>
     );
 };

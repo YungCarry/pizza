@@ -11,7 +11,7 @@ const CustomNavbar = () => {
                         <Nav.Link href="/postpizza">Pizza Hozzáadása</Nav.Link>
                     </Nav>
                     <Nav className="ml-auto">
-                        <Nav.Link href="#pricing">
+                        <Nav.Link href="/basket">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 24 24"
