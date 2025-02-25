@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Pizzak from './pages/Pizzak';
 import PostPizza from './pages/PostPizza';
 import Kosar from './pages/Kosar';
+import PizzaSelected from './pages/PizzaSelected';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
@@ -15,6 +16,7 @@ root.render(
                 <Route path="/" element={<Pizzak />}></Route>
                 <Route path="postpizza" element={<PostPizza />}></Route>
                 <Route path="basket" element={<Kosar />}></Route>
+                <Route path="pizza/:id" element={<PizzaSelected />}></Route>
             </Routes>
         </BrowserRouter>
     </React.StrictMode>,

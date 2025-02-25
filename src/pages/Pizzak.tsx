@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react';
 import { Pizza } from '../types/Pizza';
 import apiClient from '../apiClient/apiClient';
 import Card from 'react-bootstrap/Card';
-import { Button, Col, Container, Row, Toast, ToastContainer } from 'react-bootstrap';
+import { Button, Col, Container, Row, Stack, Toast, ToastContainer } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from '../components/Navbar';
 import './Pizzak.css';
+import { Link } from 'react-router-dom';
 
 const Pizzak = () => {
     const [data, setData] = useState<Array<Pizza>>([]);
@@ -44,16 +45,29 @@ const Pizzak = () => {
                                     <Card.Text className="mt-auto text-center fw-bold">
                                         {p.ar.toString()} Ft
                                     </Card.Text>
-                                    <Button
-                                        variant="dark"
-                                        onClick={() => {
-                                            kosar.push(p);
-                                            localStorage.setItem('kosar', JSON.stringify(kosar));
-                                            setShowToast(true);
-                                        }}
+                                    <Stack
+                                        direction="horizontal"
+                                        gap={2}
+                                        className="d-flex justify-content-center"
                                     >
-                                        Kosárba
-                                    </Button>
+                                        <Link to={`pizza/${p.id}`}>
+                                            <Button variant="dark">Megtekintés</Button>
+                                        </Link>
+
+                                        <Button
+                                            variant="primary"
+                                            onClick={() => {
+                                                kosar.push(p);
+                                                localStorage.setItem(
+                                                    'kosar',
+                                                    JSON.stringify(kosar),
+                                                );
+                                                //setShowToast(true);
+                                            }}
+                                        >
+                                            Kosárba
+                                        </Button>
+                                    </Stack>
                                 </Card.Body>
                             </Card>
                         </Col>

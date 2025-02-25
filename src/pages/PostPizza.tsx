@@ -1,4 +1,4 @@
-import { Container, Button } from 'react-bootstrap';
+import { Container, Button, Toast, ToastContainer } from 'react-bootstrap';
 import { Form } from 'react-bootstrap';
 import CustomNavbar from '../components/Navbar';
 import { useState } from 'react';
@@ -9,21 +9,23 @@ const PostPizza = () => {
     const [leiras, setLeiras] = useState('');
     const [ar, setAr] = useState('');
     const [imageUrl, setImageUrl] = useState('');
+    const [showToast, setShowToast] = useState(false);
 
     const newPizza = {
-        nev,
-        leiras,
+        nev: nev,
+        leiras: leiras,
         ar: Number(ar),
-        imageUrl,
+        imageUrl: imageUrl,
     };
 
     const handleSubmit = () => {
         axios
-            .post('http://localhost:8001/api/pizzak', newPizza)
+            .post('/pizzak', newPizza)
             .then((response) => {
                 switch (response.status) {
                     case 201:
                         alert('Sikeresen hozzáadva a pizza!');
+                        setShowToast(true);
                         break;
                     default:
                         alert('Hiba a pizza hozzáadásakor!');
@@ -91,6 +93,22 @@ const PostPizza = () => {
                     </Button>
                 </Form>
             </Container>
+            <ToastContainer position="bottom-end" className="p-3" style={{ zIndex: 1 }}>
+                <Toast
+                    onClose={() => setShowToast(false)}
+                    show={showToast}
+                    autohide
+                    delay={3000}
+                    bg="success"
+                    className="text-white"
+                >
+                    <Toast.Header>
+                        <strong className="me-auto">Értesítés</strong>
+                        <small>Most</small>
+                    </Toast.Header>
+                    <Toast.Body>Termék sikeressen hozzáadv</Toast.Body>
+                </Toast>
+            </ToastContainer>
         </>
     );
 };

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Pizza } from '../types/Pizza';
 import CustomNavbar from '../components/Navbar';
 import { Container, Table, Row, Col, Button, ToastContainer, Toast } from 'react-bootstrap';
@@ -6,13 +6,14 @@ import { Container, Table, Row, Col, Button, ToastContainer, Toast } from 'react
 const Kosar = () => {
     const [kosar, setKosar] = useState<Pizza[]>([]);
     const [showToast, setShowToast] = useState(false);
+    const quantity = useRef(0);
 
     useEffect(() => {
         const savedKosar = localStorage.getItem('kosar');
         if (savedKosar) {
             setKosar(JSON.parse(savedKosar));
         }
-    }, []);
+    }, []);     
 
     const vegosszeg = kosar.reduce((total, item) => total + Number(item.ar), 0);
 
@@ -35,6 +36,7 @@ const Kosar = () => {
                                         <th>Kép</th>
                                         <th>Név</th>
                                         <th>Ár</th>
+                                        <th>Mennyiség</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -49,6 +51,9 @@ const Kosar = () => {
                                             </td>
                                             <td>{item.nev}</td>
                                             <td>{item.ar.toString()} Ft</td>
+                                            <td>
+                                                {/*<input ref={quantity} type="number" min="0" />*/}
+                                            </td>
                                         </tr>
                                     ))}
                                 </tbody>
