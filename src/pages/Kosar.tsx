@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Pizza } from '../types/Pizza';
 import CustomNavbar from '../components/Navbar';
-import { Container, Table, Row, Col, Button, ToastContainer, Toast } from 'react-bootstrap';
+import { Container, Table, Row, Col, Button } from 'react-bootstrap';
+import { Bounce, ToastContainer, toast } from 'react-toastify';
 
 const Kosar = () => {
     const [kosar, setKosar] = useState<Pizza[]>([]);
-    const [showToast, setShowToast] = useState(false);
     const quantity = useRef(0);
 
     useEffect(() => {
@@ -13,13 +13,25 @@ const Kosar = () => {
         if (savedKosar) {
             setKosar(JSON.parse(savedKosar));
         }
-    }, []);     
+    }, []);
 
     const vegosszeg = kosar.reduce((total, item) => total + Number(item.ar), 0);
 
     const emptyCart = () => {
-        setKosar([]);
-        setShowToast(true);
+        localStorage.clear();
+
+        window.location.reload();
+        toast.success('Kosár sikeressen űrítve', {
+            position: 'bottom-right',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'dark',
+            transition: Bounce,
+        });
     };
 
     return (
@@ -51,9 +63,7 @@ const Kosar = () => {
                                             </td>
                                             <td>{item.nev}</td>
                                             <td>{item.ar.toString()} Ft</td>
-                                            <td>
-                                                {/*<input ref={quantity} type="number" min="0" />*/}
-                                            </td>
+                                            <td></td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -72,22 +82,19 @@ const Kosar = () => {
                     )}
                 </div>
             </Container>
-            <ToastContainer position="bottom-end" className="p-3" style={{ zIndex: 1 }}>
-                <Toast
-                    onClose={() => setShowToast(false)}
-                    show={showToast}
-                    delay={10000}
-                    autohide
-                    bg="dark"
-                    className="text-white"
-                >
-                    <Toast.Header>
-                        <strong className="me-auto">Értesítés</strong>
-                        <small>Most</small>
-                    </Toast.Header>
-                    <Toast.Body>A kosár sikeresen kiürítve.</Toast.Body>
-                </Toast>
-            </ToastContainer>
+            <ToastContainer
+                position="bottom-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick={false}
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+                transition={Bounce}
+            />
         </div>
     );
 };

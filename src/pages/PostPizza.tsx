@@ -1,15 +1,15 @@
-import { Container, Button, Toast, ToastContainer } from 'react-bootstrap';
+import { Container, Button } from 'react-bootstrap';
 import { Form } from 'react-bootstrap';
 import CustomNavbar from '../components/Navbar';
 import { useState } from 'react';
 import axios from 'axios';
+import { Bounce, ToastContainer, toast } from 'react-toastify';
 
 const PostPizza = () => {
     const [nev, setNev] = useState('');
     const [leiras, setLeiras] = useState('');
     const [ar, setAr] = useState('');
     const [imageUrl, setImageUrl] = useState('');
-    const [showToast, setShowToast] = useState(false);
 
     const newPizza = {
         nev: nev,
@@ -25,10 +25,30 @@ const PostPizza = () => {
                 switch (response.status) {
                     case 201:
                         alert('Sikeresen hozzáadva a pizza!');
-                        setShowToast(true);
+                        toast.success('Pizza sikeressen hozáadva', {
+                            position: 'bottom-right',
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: false,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: 'dark',
+                            transition: Bounce,
+                        });
                         break;
                     default:
-                        alert('Hiba a pizza hozzáadásakor!');
+                        toast.error('Hiba!', {
+                            position: 'bottom-right',
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: false,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: 'dark',
+                            transition: Bounce,
+                        });
                         break;
                 }
             })
@@ -93,22 +113,19 @@ const PostPizza = () => {
                     </Button>
                 </Form>
             </Container>
-            <ToastContainer position="bottom-end" className="p-3" style={{ zIndex: 1 }}>
-                <Toast
-                    onClose={() => setShowToast(false)}
-                    show={showToast}
-                    autohide
-                    delay={3000}
-                    bg="success"
-                    className="text-white"
-                >
-                    <Toast.Header>
-                        <strong className="me-auto">Értesítés</strong>
-                        <small>Most</small>
-                    </Toast.Header>
-                    <Toast.Body>Termék sikeressen hozzáadv</Toast.Body>
-                </Toast>
-            </ToastContainer>
+            <ToastContainer
+                position="bottom-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick={false}
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="dark"
+                transition={Bounce}
+            />
         </>
     );
 };

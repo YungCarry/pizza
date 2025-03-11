@@ -2,15 +2,15 @@ import { useEffect, useState } from 'react';
 import { Pizza } from '../types/Pizza';
 import apiClient from '../apiClient/apiClient';
 import Card from 'react-bootstrap/Card';
-import { Button, Col, Container, Row, Stack, Toast, ToastContainer } from 'react-bootstrap';
+import { Button, Col, Container, Row, Stack } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from '../components/Navbar';
 import './Pizzak.css';
 import { Link } from 'react-router-dom';
+import { Bounce, ToastContainer, toast } from 'react-toastify';
 
 const Pizzak = () => {
     const [data, setData] = useState<Array<Pizza>>([]);
-    const [showToast, setShowToast] = useState(false);
 
     const kosar: Array<Pizza> = [];
 
@@ -57,12 +57,24 @@ const Pizzak = () => {
                                         <Button
                                             variant="primary"
                                             onClick={() => {
+                                                toast.success(
+                                                    'Termék sikeressen hozzáadva a kosárhoz',
+                                                    {
+                                                        position: 'bottom-right',
+                                                        autoClose: 5000,
+                                                        hideProgressBar: false,
+                                                        closeOnClick: false,
+                                                        pauseOnHover: true,
+                                                        draggable: true,
+                                                        progress: undefined,
+                                                        theme: 'dark',
+                                                    },
+                                                );
                                                 kosar.push(p);
                                                 localStorage.setItem(
                                                     'kosar',
                                                     JSON.stringify(kosar),
                                                 );
-                                                //setShowToast(true);
                                             }}
                                         >
                                             Kosárba
@@ -74,22 +86,19 @@ const Pizzak = () => {
                     ))}
                 </Row>
             </Container>
-            <ToastContainer position="bottom-end" className="p-3" style={{ zIndex: 1 }}>
-                <Toast
-                    onClose={() => setShowToast(false)}
-                    show={showToast}
-                    autohide
-                    delay={3000}
-                    bg="success"
-                    className="text-white"
-                >
-                    <Toast.Header>
-                        <strong className="me-auto">Értesítés</strong>
-                        <small>Most</small>
-                    </Toast.Header>
-                    <Toast.Body>Termék sikeressen hozzáadva a kosaradhoz</Toast.Body>
-                </Toast>
-            </ToastContainer>
+            <ToastContainer
+                position="bottom-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick={false}
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="dark"
+                transition={Bounce}
+            />
         </div>
     );
 };
