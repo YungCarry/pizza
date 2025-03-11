@@ -9,7 +9,7 @@ const Kosar = () => {
     const quantity = useRef(0);
 
     useEffect(() => {
-        const savedKosar = localStorage.getItem('kosar');
+        const savedKosar = sessionStorage.getItem('kosar');
         if (savedKosar) {
             setKosar(JSON.parse(savedKosar));
         }
@@ -18,7 +18,7 @@ const Kosar = () => {
     const vegosszeg = kosar.reduce((total, item) => total + Number(item.ar), 0);
 
     const emptyCart = () => {
-        localStorage.clear();
+        sessionStorage.removeItem('kosar');
 
         window.location.reload();
         toast.success('Kosár sikeressen űrítve', {

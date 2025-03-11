@@ -3,16 +3,14 @@ import { Bounce, toast, ToastContainer } from 'react-toastify';
 
 const CustomNavbar = () => {
     const logout = () => {
-        if (sessionStorage.length > 0) {
+        if (sessionStorage.getItem('userName') == null) {
             sessionStorage.clear();
             toast.success('Sikeres kijelentkezés');
-        } else {
-            toast.error('Be se vagy jelentkezve mit szeretnel igy?');
         }
     };
 
     return (
-        <>
+        <div>
             <Navbar bg="dark" data-bs-theme="dark">
                 <Container>
                     <Navbar.Brand href="/">Pizzéria</Navbar.Brand>
@@ -105,7 +103,7 @@ const CustomNavbar = () => {
                 theme="dark"
                 transition={Bounce}
             />
-        </>
+        </div>
     );
 };
 

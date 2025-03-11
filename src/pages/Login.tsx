@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import CustomNavbar from '../components/Navbar';
 import { Bounce, toast, ToastContainer } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
     const loginEvent = () => {
         if (userName == 'admin' && password == '12345') {
@@ -22,6 +24,7 @@ const Login = () => {
             });
             sessionStorage.setItem('userName', userName);
             sessionStorage.setItem('password', password);
+            navigate('/');
         } else {
             toast.error('Hibás felhasználónév vagy jelszó!', {
                 position: 'bottom-right',

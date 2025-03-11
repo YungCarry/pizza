@@ -71,7 +71,7 @@ const Pizzak = () => {
                                                     },
                                                 );
                                                 kosar.push(p);
-                                                localStorage.setItem(
+                                                sessionStorage.setItem(
                                                     'kosar',
                                                     JSON.stringify(kosar),
                                                 );
