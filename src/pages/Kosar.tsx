@@ -49,6 +49,7 @@ const Kosar = () => {
                                         <th>Név</th>
                                         <th>Ár</th>
                                         <th>Mennyiség</th>
+                                        <th>Törlés</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -64,6 +65,9 @@ const Kosar = () => {
                                             <td>{item.nev}</td>
                                             <td>{item.ar.toString()} Ft</td>
                                             <td></td>
+                                            <td>
+                                                <Button variant="danger">Törlés</Button>
+                                            </td>
                                         </tr>
                                     ))}
                                 </tbody>
