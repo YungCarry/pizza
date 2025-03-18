@@ -3,10 +3,11 @@ import { Pizza } from '../types/Pizza';
 import CustomNavbar from '../components/Navbar';
 import { Container, Table, Row, Col, Button } from 'react-bootstrap';
 import { Bounce, ToastContainer, toast } from 'react-toastify';
+import apiClient from '../apiClient/apiClient';
 
 const Kosar = () => {
     const [kosar, setKosar] = useState<Pizza[]>([]);
-    const quantity = useRef(0);
+    const mennyiseg = useRef(0);
 
     useEffect(() => {
         const savedKosar = sessionStorage.getItem('kosar');
@@ -31,6 +32,48 @@ const Kosar = () => {
             progress: undefined,
             theme: 'dark',
             transition: Bounce,
+        });
+    };
+
+    const removeFromCart = (index: number) => {
+        const newKosar = [...kosar];
+        newKosar.splice(index, 1);
+        setKosar(newKosar);
+        sessionStorage.setItem('kosar', JSON.stringify(newKosar));
+        if (kosar.length === 1) {
+            sessionStorage.removeItem('kosar');
+        }
+    };
+
+    const postOrder = () => {
+        kosar.forEach((pizza) => {
+            apiClient
+                .post(
+                    '/rendelesek',
+                    { pizzaId: pizza.id, mennyiseg: 1 },
+                    {
+                        auth: {
+                            username: sessionStorage.getItem('userName') || '',
+                            password: sessionStorage.getItem('password') || '',
+                        },
+                    },
+                )
+
+                .then((response) => {
+                    switch (response.status) {
+                        case 201:
+                            console.log('User created successfully');
+                            break;
+                        case 400:
+                            console.error('Bad request');
+                            break;
+                        default:
+                            console.error('An error occurred');
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
         });
     };
 
@@ -66,18 +109,29 @@ const Kosar = () => {
                                             <td>{item.ar.toString()} Ft</td>
                                             <td></td>
                                             <td>
-                                                <Button variant="danger">Törlés</Button>
+                                                <Button
+                                                    variant="danger"
+                                                    onClick={() => removeFromCart(index)}
+                                                >
+                                                    Törlés
+                                                </Button>
                                             </td>
                                         </tr>
                                     ))}
                                 </tbody>
                             </Table>
-                            <Row className="justify-content-end">
-                                <Col xs="auto">
+                            <Row className="justify-content-end gx-5">
+                                <Col xs="auto" className="">
                                     <h2>Végösszeg: {vegosszeg} Ft</h2>
-                                    <Button variant="dark" onClick={emptyCart}>
-                                        Kosár űrítése
-                                    </Button>
+
+                                    <Col className="gx-5">
+                                        <Button variant="primary" onClick={postOrder}>
+                                            Rendelés leadása
+                                        </Button>
+                                        <Button variant="dark" onClick={emptyCart}>
+                                            Kosár űrítése
+                                        </Button>
+                                    </Col>
                                 </Col>
                             </Row>
                         </div>

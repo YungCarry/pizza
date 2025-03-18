@@ -3,9 +3,11 @@ import { Bounce, toast, ToastContainer } from 'react-toastify';
 
 const CustomNavbar = () => {
     const logout = () => {
-        if (sessionStorage.getItem('userName') == null) {
+        if (sessionStorage.getItem('userName') !== null) {
             sessionStorage.clear();
             toast.success('Sikeres kijelentkezés');
+        } else {
+            toast.error('Nem vagy be jelentkezve');
         }
     };
 
