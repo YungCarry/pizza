@@ -45,6 +45,7 @@ const Kosar = () => {
         if (kosar.length === 1) {
             sessionStorage.removeItem('kosar');
         }
+        toast.success('Tétel sikeresen törölve a kosárból');
     };
 
     const postOrder = () => {
