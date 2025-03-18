@@ -35,6 +35,7 @@ const Pizzak = () => {
                         <Col key={p.id.toString()}>
                             <Card className="h-100 shadow-sm">
                                 <Card.Img
+                                    className="card-image"
                                     variant="top"
                                     src={'http://localhost:8001/api/kepek/' + p.imageUrl}
                                     style={{ width: '100%', height: '100%' }}
