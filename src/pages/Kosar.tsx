@@ -4,10 +4,12 @@ import CustomNavbar from '../components/Navbar';
 import { Container, Table, Row, Col, Button } from 'react-bootstrap';
 import { Bounce, ToastContainer, toast } from 'react-toastify';
 import apiClient from '../apiClient/apiClient';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const Kosar = () => {
     const [kosar, setKosar] = useState<Pizza[]>([]);
     const mennyiseg = useRef(0);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const savedKosar = sessionStorage.getItem('kosar');
@@ -74,7 +76,9 @@ const Kosar = () => {
                 .catch((error) => {
                     console.error(error);
                 });
+            sessionStorage.removeItem('kosar');
         });
+        toast.success('Rendelés sikeresen leadva');
     };
 
     return (
