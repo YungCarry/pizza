@@ -12,7 +12,7 @@ const CustomNavbar = () => {
     };
 
     return (
-        <div>
+        <div data-testid="navbar-div">
             <Navbar bg="dark" data-bs-theme="dark">
                 <Container>
                     <Navbar.Brand href="/">Pizzéria</Navbar.Brand>

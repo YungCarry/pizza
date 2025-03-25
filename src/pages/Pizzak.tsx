@@ -26,7 +26,7 @@ const Pizzak = () => {
     }, []);
 
     return (
-        <div className="page-container">
+        <div className="page-container" data-testid="pizzak-div">
             <Navbar />
             <Container className="content-container">
                 <h1 className="text-center my-4">Pizzáink</h1>
