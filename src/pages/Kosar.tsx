@@ -133,7 +133,11 @@ const Kosar = () => {
                                         <Button variant="primary" onClick={postOrder}>
                                             Rendelés leadása
                                         </Button>
-                                        <Button variant="dark" onClick={emptyCart}>
+                                        <Button
+                                            data-testid="EmptyCartButton"
+                                            variant="dark"
+                                            onClick={emptyCart}
+                                        >
                                             Kosár űrítése
                                         </Button>
                                     </Col>

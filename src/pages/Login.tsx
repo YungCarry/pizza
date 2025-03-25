@@ -43,7 +43,7 @@ const Login = () => {
     };
 
     return (
-        <div>
+        <div data-testid="login-div">
             <CustomNavbar />
             <div className="container mt-5">
                 <h1>Bejelentkezés</h1>
