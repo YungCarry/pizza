@@ -1,17 +1,14 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Pizza } from '../types/Pizza';
 import apiClient from '../apiClient/apiClient';
-import Card from 'react-bootstrap/Card';
-import { Button, Col, Container, Row, Stack } from 'react-bootstrap';
+import { Navbar, Container, Row, Col, Card, Stack, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Navbar from '../components/Navbar';
-import './Pizzak.css';
 import { Link } from 'react-router-dom';
 import { Bounce, ToastContainer, toast } from 'react-toastify';
+import './Pizzak.css';
 
 const Pizzak = () => {
     const [data, setData] = useState<Array<Pizza>>([]);
-
     const kosar: Array<Pizza> = [];
 
     useEffect(() => {
@@ -19,6 +16,7 @@ const Pizzak = () => {
             .get('/pizzak')
             .then((response) => {
                 setData(response.data);
+                localStorage.setItem('Pizzak', JSON.stringify(response.data));
             })
             .catch((error) => {
                 console.error(error);
